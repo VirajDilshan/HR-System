@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+
+    <div class="row pt-2">
+        <div class="col-md-6">
+            <div class="card card-secondary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-cogs"></i>
+                        Operation
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-secondary card-tabs">
+                                <div class="card-header p-0 pt-1">
+                                    <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="custom-tabs-age-gender-tab" data-toggle="pill" href="#custom-tabs-age-gender" role="tab" aria-controls="custom-tabs-age-gender" aria-selected="true">fb insights age and gender</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-city-country-tab" data-toggle="pill" href="#custom-tabs-city-country" role="tab" aria-controls="custom-tabs-city-country" aria-selected="false">fb insights city and country</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content" id="custom-tabs-one-tabContent">
+                                        <div class="tab-pane fade active show" id="custom-tabs-age-gender" role="tabpanel" aria-labelledby="custom-tabs-age-gender-tab">
+                                            <button href="#"  class="btn btn-success btn-block">Fetch New FB insights(Recommended)</button>
+                                            <button id="fetchAllAgeGenderInsights"  class="btn btn-danger btn-block">Fetch All FB insights</button>
+                                            <button id="updateAllAgeGenderInsights"  class="btn btn-warning btn-block">Update</button>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="custom-tabs-city-country" role="tabpanel" aria-labelledby="custom-tabs-city-country-tab">
+                                            <a href="#"  class="btn btn-success btn-block">Fetch New FB insights(Recommended)</a>
+                                            <a href="#"  class="btn btn-warning btn-block">Update with new data(Recommended)</a>
+                                            <a href="#"  class="btn btn-danger btn-block">Fetch All FB insights</a>
+                                            <a href="#"  class="btn btn-danger btn-block">Update Entire Database</a>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /.card-body -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-info card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-info-circle"></i>
+                        information
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+
+                    <div class="callout callout-info overflow-auto">
+                        <h5>Fetched Details</h5>
+                        <div id="insight-info"></div>
+                    </div>
+
+                    <div class="callout callout-info overflow-auto">
+                        <h5>Saved Details</h5>
+                        <blockquote class="quote-secondary">
+                            <p id="insight-save-info"></p>
+                            <small id="insight-save-info-details"></small>
+
+                        </blockquote>
+                    </div>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

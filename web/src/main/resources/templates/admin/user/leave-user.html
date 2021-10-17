@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2 d-flex justify-content-center">
+        <div th:replace="~{/admin/common/toast :: toast(redirectParam = ${redirectParam})}"></div>
+
+        <div class="col-md-6">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Leave form</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <form id="leave-form" action="#" th:action="@{/admin/module/leave}"
+                          th:object="${leave}" method="post" >
+                        <div class="form-group">
+                            <label>I am on Leave</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>From</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="datetime-local" th:field="*{leaveFrom}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd HH:mm" data-mask="" im-insert="false">
+                                    </div>
+                                    <span th:if="${#fields.hasErrors('leaveFrom')}" th:errors="*{leaveFrom}" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>To</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="datetime-local" th:field="*{leaveTo}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd HH:mm" data-mask="" im-insert="false">
+                                    </div>
+                                    <span th:if="${#fields.hasErrors('leaveTo')}" th:errors="*{leaveTo}" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <span th:if="${date_from_to_err != null}" th:text="${date_from_to_err}" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>comment</label>
+                            <textarea class="form-control" th:field="*{comment}" rows="3" placeholder="Why are you on leave"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-primary btn-xs" id="leave-btn">Apply</button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Leave Details</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="tbl-leave" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Status</th>
+                            <th>action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="leave : ${leaves}">
+                                <td th:text="${leave.getLeaveFrom()}"></td>
+                                <td th:text="${leave.getLeaveTo()}"></td>
+                                <td>
+                                    <span th:text="${leave.getStatus()}" class="badge "
+                                          th:classappend="|${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).PENDING ? 'badge-success ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).APPROVED ? 'badge-warning ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).REJECTED ? 'badge-danger ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).CANCELED ? 'badge-secondary ': ''}|"></span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/module/leave/view/{id}(id=${leave.id})}"><i class="fas fa-eye"></i></a>
+                                    <a th:if="${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).PENDING}"
+                                       th:href="@{/admin/module/leave/edit/{id}(id=${leave.id})}"><i class="fas fa-edit"></i></a>
+                                    <a th:if="${!leave.getAskClosed()}"
+                                       th:href="@{/admin/module/leave/cancel/{id}(id=${leave.id})}">
+                                        <i class="far fa-closed-captioning"></i>
+                                    </a>
+                                    <a th:if="${leave.getAskClosed() and leave.getStatus() != T(com.epsychiatry.model.enums.LeaveStatus).CANCELED}"
+                                       th:href="@{/admin/module/leave/not-cancel/{id}(id=${leave.id})}">
+                                        <i class="far fa-times-circle"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+</body>
+</html>

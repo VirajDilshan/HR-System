@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row d-flex justify-content-center pt-2">
+        <div class="col-md-8">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Group</h3>
+                </div>
+                <!-- /.card-header -->
+                <form role="form" action="#" th:action="@{/admin/employee/management/group/edit/{id}(id=${user_group.id})}" th:object="${user_group}" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="groupInputName">Group name</label>
+                                    <input type="text" th:field="*{name}" class="form-control" id="groupInputName" placeholder="ADMIN_GROUP" />
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Group Description</label>
+                                    <textarea class="form-control" th:field="*{description}"  rows="3"></textarea>
+                                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="customCheckbox-activate" th:field="*{activate}" />
+                                        <label for="customCheckbox-activate" class="custom-control-label">activate</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Roles</label>
+                                        <select class="duallistbox" multiple="multiple" th:field="*{roles}">
+
+                                            <option th:each="r : ${all_roles}" th:value="${{r}}" th:text="${r.getName()}"></option>
+
+                                        </select>
+                                    </div>
+
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+                    </div>
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

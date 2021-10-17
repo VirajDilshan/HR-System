@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container-fluid" layout:fragment="content" >
+        <div class="row pt-2" sec:authorize="hasAnyAuthority('ROLE_LOGIN_EPS')">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daily Quote</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <blockquote>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                        </blockquote>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Current Time</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 time-frame">
+                                <div id='date-part'></div>
+                                <div id='time-part'></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Birthday Wishes!!!</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle" th:src="@{${logged_user.getAvatarImagePath() == null ? '/assets/img/user1-128x128.jpg': logged_user.getAvatarImagePath()}}" alt="User profile picture">
+                        </div>
+
+                        <h3 class="profile-username text-center" th:text="${logged_user.getFirstName() +' '+ logged_user.getLastName()}"></h3>
+
+                        <p class="text-muted text-center" th:text="${logged_user.getPosition().getDisplayName()}"></p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Employee Number</b> <a class="float-right" th:text="${logged_user.getEmpID()}"></a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Department</b> <a class="float-right" th:text="${logged_user.getDepartment().getDisplayName()}"></a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Mobile</b> <a class="float-right" th:text="${logged_user.getMobileNo()}"></a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Email</b> <a class="float-right" th:text="${logged_user.getEmail()}"></a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Nic</b> <a class="float-right" th:text="${logged_user.getNic()}"></a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Address</b> <a class="float-right" th:text="${logged_user.getAddress()}"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">I am in Leave</h3>
+                        <a th:href="@{/admin/module/leave}" class="float-right"><span class="badge badge-primary">goto Leave management</span></a>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">My Leaves</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                        <i class="fas fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Leave dates</th>
+                                        <th>status</th>
+                                        <th>action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr th:each="fl : ${future_leaves}">
+                                        <td th:text="${fl.getLeaveFrom()}"></td>
+                                        <td>
+                                            <span th:text="${fl.getStatus()}" class="badge "
+                                                  th:classappend="|${fl.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).PENDING ? 'badge-success ': ''}
+                                          ${fl.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).APPROVED ? 'badge-warning ': ''}
+                                          ${fl.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).REJECTED ? 'badge-danger ': ''}
+                                          ${fl.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).CANCELED ? 'badge-secondary ': ''}|"></span>
+                                        </td>
+                                        <td class="text-right py-0 align-middle">
+                                            <div class="btn-group btn-group-sm">
+                                                <a th:href="@{/admin/module/leave/view/{id}(id=${fl.id})}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                <a th:if="${fl.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).PENDING}"
+                                                   th:href="@{/admin/module/leave/edit/{id}(id=${fl.id})}" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Policy Documents</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+                <!-- Calendar -->
+                <div class="card bg-gradient-primary">
+                    <div class="card-header border-0">
+
+                        <h3 class="card-title">
+                            <i class="far fa-calendar-alt"></i>
+                            Calendar
+                        </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body pt-0">
+                        <!--The calendar -->
+                        <div id="calendar" style="width: 100%"></div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Vision & Mission</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

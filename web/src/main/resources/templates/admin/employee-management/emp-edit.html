@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2 d-flex justify-content-center">
+        <div class="col-md-10 ">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Update Employee</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <form action="#" th:action="@{/admin/employee/management/emp/edit/{id}(id=${emp.id})}"
+                          th:object="${emp}" method="post"
+                          enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <h3 class="card-title">General information</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="user-userID">User id</label>
+                                            <input type="text" th:field="*{empID}" class="form-control" id="user-userID" placeholder="unique id eg :- 23422213" readonly>
+                                            <span th:if="${#fields.hasErrors('empID')}" th:errors="*{empID}" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="user-fname">First Name</label>
+                                            <input type="text" th:field="*{firstName}" class="form-control" id="user-fname" >
+                                            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="user-lname">Last Name</label>
+                                            <input type="text" th:field="*{lastName}" class="form-control" id="user-lname" >
+                                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="user-nic">NIC</label>
+                                            <input type="text" th:field="*{nic}" class="form-control" id="user-nic" placeholder="19960223543V">
+                                            <span th:if="${#fields.hasErrors('nic')}" th:errors="*{nic}" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Birthday</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                </div>
+                                                <input type="date" th:field="*{birthday}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd" data-mask="" im-insert="false">
+                                            </div>
+                                            <span th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}" class="text-danger"></span>
+                                            <!-- /.input group -->
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Join Date</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                </div>
+                                                <input type="date" th:field="*{joinDate}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd" data-mask="" im-insert="false">
+                                            </div>
+                                            <span th:if="${#fields.hasErrors('joinDate')}" th:errors="*{joinDate}" class="text-danger"></span>
+                                            <!-- /.input group -->
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Gender</label>
+                                                    <select class="form-control" th:field="*{gender}">
+                                                        <option th:each="c : ${(T(com.epsychiatry.model.enums.Gender).values())}"
+                                                                th:value="${c}" th:text="${c.displayName}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Position</label>
+                                                    <select class="form-control" th:field="*{position}">
+                                                        <option th:each="c : ${(T(com.epsychiatry.model.enums.Position).values())}"
+                                                                th:value="${c}" th:text="${c.displayName}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Position</label>
+                                            <select class="form-control" th:field="*{department}">
+                                                <option th:each="c : ${(T(com.epsychiatry.model.enums.Department).values())}"
+                                                        th:value="${c}" th:text="${c.displayName}"></option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="user-avatar">Avatar</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" name="avatar-img" class="custom-file-input" id="user-avatar" accept="image/png, image/jpeg">
+                                                    <label class="custom-file-label" for="user-avatar">Choose file</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Group</label>
+                                            <select class="form-control" th:field="*{userGroup}">
+                                                <option th:each="ug : ${groups}" th:value="${ug.getId()}" th:text="${ug.getName()}"></option>
+                                            </select>
+                                            <span th:if="${#fields.hasErrors('userGroup')}" th:errors="*{userGroup}" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.card-body -->
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card card-gray-dark card-outline" >
+                                    <div class="card-header">
+                                        <h3 class="card-title">Residence information</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <textarea th:field="*{address}" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                            <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="user-postalCode">Postal code</label>
+                                            <input th:field="*{postalCode}" type="text" class="form-control" id="user-postalCode">
+                                            <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    <select class="form-control" th:field="*{country}">
+                                                        <option th:each="c : ${(T(com.epsychiatry.model.enums.Country).values())}"
+                                                                th:value="${c}" th:text="${c.displayName}"></option>
+                                                    </select>
+                                                    <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="text-danger"></span>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="user-city">City</label>
+                                                    <input th:field="*{city}" type="text" class="form-control" id="user-city">
+                                                    <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                                <div class="card card-navy card-outline">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Contact information</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                </div>
+                                                <input type="email" class="form-control" th:field="*{email}">
+                                            </div>
+                                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+                                            <!-- /.input group -->
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Mobile Number</label>
+
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                        </div>
+                                                        <input type="text" th:field="*{mobileNo}" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" inputmode="verbatim" im-insert="true">
+                                                    </div>
+                                                    <span th:if="${#fields.hasErrors('mobileNo')}" th:errors="*{mobileNo}" class="text-danger"></span>
+                                                    <!-- /.input group -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Land Number</label>
+
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                        </div>
+                                                        <input type="text" th:field="*{landNo}" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" inputmode="verbatim" im-insert="true">
+                                                    </div>
+                                                    <!-- /.input group -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                                <div class="card card-indigo card-outline">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Bank information</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Bank Account Number</label>
+
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-money-check-alt"></i></span>
+                                                </div>
+                                                <input type="text" th:field="*{bankAccountNumber}" class="form-control" >
+                                                <span th:if="${#fields.hasErrors('bankAccountNumber')}" th:errors="*{bankAccountNumber}" class="text-danger"></span>
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+
+                                        <div class="row d-flex align-items-end">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="user-backCode">bank code</label>
+                                                    <input type="text" th:field="*{bankCode}" class="form-control" id="user-backCode">
+                                                    <span th:if="${#fields.hasErrors('bankCode')}" th:errors="*{bankCode}" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="user-backBranchName">bank branch name</label>
+                                                    <input type="text" th:field="*{bankBranchName}" class="form-control" id="user-backBranchName">
+                                                    <span th:if="${#fields.hasErrors('bankBranchName')}" th:errors="*{bankBranchName}" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="user-backBranchCode">bank branch code</label>
+                                                    <input type="text" th:field="*{bankBranchCode}" class="form-control" id="user-backBranchCode">
+                                                    <span th:if="${#fields.hasErrors('bankBranchCode')}" th:errors="*{bankBranchCode}" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.card-body -->
+
+
+
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">update</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

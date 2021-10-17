@@ -1,0 +1,27 @@
+.del {
+    text-decoration: line-through;
+}
+
+.time-frame {
+    background-color: #007bff;
+    color: #ffffff;
+    font-family: Arial;
+}
+
+.time-frame > div {
+    width: 100%;
+    text-align: center;
+}
+
+#date-part {
+    font-size: 1.2em;
+}
+#time-part {
+    font-size: 2em;
+}
+
+.left-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

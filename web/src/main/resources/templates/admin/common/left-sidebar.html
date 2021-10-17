@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head></head>
+<body>
+<aside class="main-sidebar sidebar-dark-primary elevation-4" th:fragment="side-bar">
+    <!-- Brand Logo -->
+    <a th:href="@{/admin/dashboard}" class="brand-link">
+        <img th:src="@{/assets/img/esy_logo.jpg}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light" th:text="#{left.sidebar.epsychiatrian}"></span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition"><div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 236px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible os-viewport-native-scrollbars-overlaid" style="overflow-y: scroll;"><div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img th:src="@{${#request.userPrincipal.principal.AvatarURL}}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a th:href="@{/admin/dashboard}" class="d-block"><span>[[${#request.remoteUser}]]</span></a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a th:href="@{/admin/module/}" class="nav-link">
+                        <i class="nav-icon fas fa-cubes"></i>
+                        <p th:text="#{left.sidebar.module}">
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item has-treeview" sec:authorize="hasAnyAuthority('ROLE_FB_MANAGE')">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fab fa-facebook"></i>
+                        <p th:text="#{left.sidebar.facebook}">
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_FB_GET_TOKEN')">
+                            <a th:href="@{/admin/facebook/update/token}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p th:text="#{left.sidebar.facebook.sub.facebook-token}"></p>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_FB_SAVE_INSIGHTS')">
+                            <a th:href="@{/admin/facebook/update/insights}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p th:text="#{left.sidebar.facebook.sub.update-database}"></p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a th:href="@{/admin/facebook/view/analytics}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p th:text="#{left.sidebar.facebook.sub.analytics}"></p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview" sec:authorize="hasAnyAuthority('ROLE_EMP_MANG_MANAGE')">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user-cog"></i>
+                        <p th:text="#{left.sidebar.employee-management}">
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_EMP_MANG_USER_GROUP')">
+                            <a th:href="@{/admin/employee/management/group}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p th:text="#{left.sidebar.employee-management.sub.group-management}"></p>
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_EMP_MANG_ROLE')">
+                            <a th:href="@{/admin/employee/management/roles}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p th:text="#{left.sidebar.employee-management.sub.role-management}"></p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_EMP_MANG_EMP_MANAGE')">
+                            <a th:href="@{/admin/employee/management/emp}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p th:text="#{left.sidebar.employee-management.sub.emp-management}"></p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview" sec:authorize="hasAnyAuthority('ROLE_HR_FUNC_VIEW')">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-people-arrows"></i>
+                        <p th:text="#{left.sidebar.hr-function}">
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_HR_LEAVE_MANAGE_VIEW')">
+                            <a th:href="@{/admin/hr/management/leave}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p th:text="#{left.sidebar.hr-function.sub.leave-manage}"></p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="height: 18.8394%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar-corner"></div></div>
+    <!-- /.sidebar -->
+</aside>
+
+</body>
+
+
+
+</html>
+
+

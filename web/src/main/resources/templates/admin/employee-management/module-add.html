@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2 d-flex justify-content-center">
+        <div class="col-md-6">
+            <div th:if="${module_exists != null}"  class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-info"></i> Alert!</h5>
+                <div th:text="${module_exists}"></div>
+            </div>
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add New Module</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" action="#" th:action="@{/admin/employee/management/module/add}" th:object="${module}" method="post">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="moduleInputName">Module name</label>
+                            <input type="text" th:field="*{moduleName}" class="form-control" id="moduleInputName" placeholder="login">
+                            <span th:if="${#fields.hasErrors('moduleName')}" th:errors="*{moduleName}" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="moduleRolePrefix">Role Prefix</label>
+                            <input type="text" th:field="*{rolePrefix}" class="form-control" id="moduleRolePrefix" placeholder="ROLE_LOGIN">
+                            <span th:if="${#fields.hasErrors('rolePrefix')}" th:errors="*{rolePrefix}" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Module Description</label>
+                            <textarea th:field="*{description}" class="form-control"  rows="3"></textarea>
+                            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

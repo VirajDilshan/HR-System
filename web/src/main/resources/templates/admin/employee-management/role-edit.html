@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row d-flex justify-content-center pt-2">
+        <div class="col-md-8">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Roles</h3>
+                </div>
+                <!-- /.card-header -->
+                <form role="form" action="#" th:action="@{/admin/employee/management/role/edit/{id}(id=${role.id})}" th:object="${role}" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Module</label>
+                                    <select th:field="*{module}" class="form-control select2bs4" style="width: 100%;">
+                                        <option th:each="m : ${all_modules}" th:value="${{m}}" th:text="${m.getRolePrefix()}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="groupInputName">Role name</label>
+                                    <input type="text" th:field="*{name}" class="form-control" id="groupInputName" placeholder="ADMIN_GROUP" />
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Role Description</label>
+                                    <textarea class="form-control" th:field="*{description}"  rows="3"></textarea>
+                                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Groups</label>
+                                        <select class="duallistbox" multiple="multiple" th:field="*{userGroups}">
+
+                                            <option th:each="g : ${all_groups}" th:value="${{g}}" th:text="${g.getName()}"></option>
+
+                                        </select>
+                                    </div>
+
+                                    <!-- /.form-group -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-block btn-primary">Submit</button>
+                        </div>
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

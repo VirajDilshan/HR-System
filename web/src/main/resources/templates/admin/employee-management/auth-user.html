@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2 d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Auth Update</h3>
+                </div>
+                <form id="auth-form" role="form" action="#" th:action="@{/auth/user/edit/{id}(id=${emp.id})}"
+                      th:object="${emp}" method="post">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="username">username</label>
+                            <input type="text" th:field="*{username}" class="form-control" id="username" required>
+                            <span th:if="${username_exists != null}" th:text="${username_exists}" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">password</label>
+                            <input type="password" th:field="*{password}" class="form-control" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">confirm password</label>
+                            <input type="password" class="form-control" id="confirm-password" required>
+                        </div>
+                        <div id="auth-pass-match" class="text-danger"></div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-block btn-primary">update credentials</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

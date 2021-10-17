@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2 d-flex justify-content-center">
+        <div th:replace="~{/admin/common/toast :: toast(redirectParam = ${redirectParam})}"></div>
+
+        <div class="col-md-6">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Edit your Leave</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <form id="leave-form" action="#" th:action="@{/admin/module/leave/edit/{id}(id=${leave.id})}"
+                          th:object="${leave}" method="post" >
+                        <div class="form-group">
+                            <label>I am on Leave</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>From</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="datetime-local" th:field="*{leaveFrom}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd HH:mm" data-mask="" im-insert="false">
+                                    </div>
+                                    <span th:if="${#fields.hasErrors('leaveFrom')}" th:errors="*{leaveFrom}" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>To</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="datetime-local" th:field="*{leaveTo}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd HH:mm" data-mask="" im-insert="false">
+                                    </div>
+                                    <span th:if="${#fields.hasErrors('leaveTo')}" th:errors="*{leaveTo}" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <span th:if="${date_from_to_err != null}" th:text="${date_from_to_err}" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>comment</label>
+                            <textarea class="form-control" th:field="*{comment}" rows="3" placeholder="Why are you on leave"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-primary btn-xs" id="leave-btn">Update</button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

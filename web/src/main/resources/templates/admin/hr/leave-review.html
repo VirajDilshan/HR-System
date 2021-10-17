@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2 d-flex justify-content-center">
+        <div th:replace="~{/admin/common/toast :: toast(redirectParam = ${redirectParam})}"></div>
+
+        <div class="col-md-6">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Review Leave</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <form id="leave-form" action="#" th:action="@{/admin/hr/management/leave/review/{id}(id=${leave.id})}"
+                          th:object="${leave}" method="post" >
+                        <input type="hidden" th:filed="*{emp}" class="form-control" readonly>
+                        <input type="hidden" th:filed="*{emp}" class="form-control" readonly>
+                        <div class="form-group">
+                            <label>I am on Leave</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>First name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-user"></i></span>
+                                        </div>
+                                        <input type="text" th:value="${leave.getEmp().getFirstName()}" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Last name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-user"></i></span>
+                                        </div>
+                                        <input type="text" th:value="${leave.getEmp().getLastName()}" class="form-control" readonly>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>From</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="datetime-local" th:field="*{leaveFrom}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd HH:mm" data-mask="" im-insert="false" readonly>
+                                    </div>
+                                    <span th:if="${#fields.hasErrors('leaveFrom')}" th:errors="*{leaveFrom}" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>To</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="datetime-local" th:field="*{leaveTo}" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd HH:mm" data-mask="" im-insert="false" readonly>
+                                    </div>
+                                    <span th:if="${#fields.hasErrors('leaveTo')}" th:errors="*{leaveTo}" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Section/Position</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                </div>
+                                <input type="text" class="form-control" th:value="${leave.getEmp().getPosition()}" rows="3" placeholder="Why are you on leave" readonly />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>comment</label>
+                            <textarea class="form-control" th:field="*{comment}" rows="3" readonly></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select class="form-control" th:field="*{status}">
+                                <option th:each="c : ${(T(com.epsychiatry.model.enums.LeaveStatus).values())}"
+                                        th:value="${c}" th:text="${c.displayName}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Review Comment</label>
+                            <textarea class="form-control" th:field="*{approvedComment}" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-primary btn-xs" id="leave-btn">Submit</button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

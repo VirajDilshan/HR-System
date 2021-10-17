@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <script th:replace="~{/admin/common/fb-scripts :: facebook-token}"></script>
+
+
+    <div class="row pt-2">
+        <div class="col-md-6">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-cogs"></i>
+                        Token Setting
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <fb:login-button
+                                    scope="public_profile,
+                                    email,
+                                    read_insights,
+                                    ads_management,
+                                    ads_read,
+                                    business_management" onlogin="checkLoginState();">
+                            </fb:login-button>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="fb-status"></div>
+                        </div>
+                    </div>
+                    <div class="row pt-5">
+                        <div class="col-md-12">
+                            <form action="#" th:action="@{/admin/facebook/token}" th:object="${accessToken}" method="post">
+                                <div class="card pt-2">
+                                    <div class="card-header">
+                                        <h3 class="card-title">New Token Details</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body p-0">
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <th>info</th>
+                                                <th>value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>accessToken</td>
+                                                <td>
+                                                    <input type="text" th:field="*{token}" name="accessToken" id="accessToken" class="form-control" readonly="true"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>userID</td>
+                                                <td>
+                                                    <input type="text" th:field="*{userID}" name="userID" id="userID" class="form-control" readonly="true"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>expiresIn</td>
+                                                <td>
+                                                    <input type="text" th:field="*{expiresIn}" name="expiresIn" id="expiresIn" class="form-control"  readonly="true"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>signedRequest</td>
+                                                <td>
+                                                    <input type="text" th:field="*{signedRequest}" name="signedRequest" id="signedRequest" class="form-control"  readonly="true"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>graphDomain</td>
+                                                <td>
+                                                    <input type="text" th:field="*{graphDomain}" name="graphDomain" id="graphDomain" class="form-control"  readonly="true"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>access expiration time</td>
+                                                <td>
+                                                    <input type="text" th:field="*{accessExpTime}" name="accessExpTime" id="accessExpTime" class="form-control" readonly="true"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>status</td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="token-status" id="token-status"  readonly="true"/>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                                <input type="submit" class="btn btn-primary btn-block"  value="Save Token"/>
+
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-default">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-info-circle"></i>
+                        Token info
+                    </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="card pt-2">
+                        <div class="card-header">
+                            <h3 class="card-title">Last Access Token Details</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <table class="table table-sm">
+                                <thead>
+                                <tr>
+                                    <th>info</th>
+                                    <th>value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>accessToken</td>
+                                    <td th:text="${#strings.substring(latest_token.token, 0, 10)} + '...'"></td>
+                                </tr>
+                                <tr>
+                                    <td>userID</td>
+                                    <td th:text="${latest_token.userID}"></td>
+                                </tr>
+                                <tr>
+                                    <td>expiresIn</td>
+                                    <td th:text="${latest_token.expiresIn}"></td>
+                                </tr>
+                                <tr>
+                                    <td>signedRequest</td>
+                                    <td th:text="${#strings.substring(latest_token.signedRequest, 0, 10)} + '...'"></td>
+                                </tr>
+                                <tr>
+                                    <td>graphDomain</td>
+                                    <td th:text="${latest_token.graphDomain}"></td>
+                                </tr>
+                                <tr>
+                                    <td>access expiration time</td>
+                                    <td th:text="${latest_token.accessExpTime}"></td>
+                                </tr>
+                                <tr>
+                                    <td>status</td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+</body>
+</html>

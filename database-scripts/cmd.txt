@@ -1,0 +1,1 @@
+docker exec mysql-esy mysqldump -u user --password=pass epsychiatry > /home/rasika/projects/Facebook-API/facebook/database-scripts/init.sql

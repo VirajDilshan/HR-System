@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2 d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card card-gray-dark">
+                <div class="card-header">
+                    <h3 class="card-title">Leave Details</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Leave details od user</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <div class="text-center m-2">
+                                <img class="profile-user-img img-fluid img-circle"
+                                     th:src="@{${leave.getEmp().getAvatarImagePath() == null ? '/assets/img/user1-128x128.jpg': leave.getEmp().getAvatarImagePath()}}" alt="User profile picture">
+                            </div>
+
+                            <table class="table table-sm">
+                                <thead>
+                                <tr>
+                                    <th style="width: 5px"></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th style="width: 5px"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>First name</td>
+                                    <td th:text="${leave.getEmp().getFirstName()}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Last name</td>
+                                    <td th:text="${leave.getEmp().getLastName()}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Section/Position</td>
+                                    <td th:text="${leave.getEmp().getPosition()}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>From</td>
+                                    <td th:text="${leave.getLeaveFrom()}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>To</td>
+                                    <td th:text="${leave.getLeaveTo()}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Comment</td>
+                                    <td th:text="${leave.getComment()}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Status</td>
+                                    <td>
+                                        <span th:text="${leave.getStatus()}" class="badge "
+                                              th:classappend="|${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).PENDING ? 'badge-success ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).APPROVED ? 'badge-warning ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).REJECTED ? 'badge-danger ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).CANCELED ? 'badge-secondary ': ''}|"></span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Approved By</td>
+                                    <td class="font-weight-bold" th:text="${leave.getApprovedBy() == null ? '' : leave.getApprovedBy().getFirstName()}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Approved comment</td>
+                                    <td th:text="${leave.getApprovedComment()}"></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

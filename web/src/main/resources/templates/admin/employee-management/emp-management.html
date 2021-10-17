@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2">
+        <div class="col-md-3">
+            <a th:href="@{/admin/employee/management/emp/add}">
+                <div class="info-box bg-success">
+                    <span class="info-box-icon"><i class="fas fa-folder-plus"></i></span>
+
+                    <div class="info-box-content">
+                        Add New Employee
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </a>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Summery</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3 th:text="${#lists.size(emps)}"/>
+
+                            <p>Total Employee</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Employee Details</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="tbl-user" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>User Id</th>
+                            <th>Avatar</th>
+                            <th>group</th>
+                            <th>First name</th>
+                            <th>Gender</th>
+                            <th>country</th>
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="e : ${emps}">
+                                <td th:text="${e.getEmpID()}" th:classappend="${e.enabled} ? '': 'del'"></td>
+                                <td><img class="direct-chat-img"
+                                         th:src="@{${e.getAvatarImagePath() == null ? '/assets/img/user1-128x128.jpg': e.getAvatarImagePath()}}" alt="avatar"></td>
+                                <td th:classappend="${e.enabled} ? '': 'del'">
+                                    <span th:text="${e.getUserGroup().getName()}" class="badge badge-success"></span>
+                                </td>
+                                <td th:text="${e.getFirstName()}" th:classappend="${e.enabled} ? '': 'del'"></td>
+                                <td th:text="${e.getGender()}" th:classappend="${e.enabled} ? '': 'del'"></td>
+                                <td th:text="${e.getCountry().getDisplayName()}" th:classappend="${e.enabled} ? '': 'del'"></td>
+                                <td>
+                                    <a href="#"><i class="fas fa-eye"></i></a>
+                                    <a th:href="@{/admin/employee/management/emp/edit/{id}(id=${e.id})}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a th:if="${e.enabled}"
+                                       th:href="@{/admin/employee/management/emp/deactivate/{id}(id=${e.id})}">
+                                        <i class="fas fa-times-circle"></i>
+                                    </a>
+                                    <a th:unless="${e.enabled}"
+                                       th:href="@{/admin/employee/management/emp/activate/{id}(id=${e.id})}">
+                                        <i class="fas fa-check-circle"></i>
+                                    </a>
+                                    <a th:href="@{/admin/employee/management/emp/delete/{id}(id=${e.id})}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                    <a th:href="@{/admin/employee/management/auth/edit/{id}(id=${e.id})}">
+                                        <i class="fas fa-key"></i></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

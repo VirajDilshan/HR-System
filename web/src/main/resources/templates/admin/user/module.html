@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+
+    <div class="row pt-4 d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="row">
+
+                <div class="col-sm-4">
+                    <div class="position-relative p-3 bg-fuchsia shadow p-3 mb-5 bg-white rounded" style="height: 180px">
+                        <div class="ribbon-wrapper ribbon-xl">
+                            <div class="ribbon bg-white">
+                                Leaving
+                            </div>
+                        </div>
+                        Leaving Module <br>
+                        <small>Apply your leaving</small>
+                        <div class="mt-2">
+                            <a th:href="@{/admin/module/leave}" class="btn btn-app btn-primary">
+                                <i class="fas fa-plane-departure"></i> here
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+</body>
+</html>

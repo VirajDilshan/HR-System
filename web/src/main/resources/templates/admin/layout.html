@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 3 | Dashboard</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" th:href="@{/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css}">
+    <!-- iCheck -->
+    <link rel="stylesheet" th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" th:href="@{/plugins/jqvmap/jqvmap.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/assets/css/adminlte.min.css}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" th:href="@{/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" th:href="@{/plugins/daterangepicker/daterangepicker.css}">
+    <!-- summernote -->
+    <link rel="stylesheet" th:href="@{/plugins/summernote/summernote-bs4.css}">
+    <!-- Select2 -->
+    <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css}">
+    <!--custom-->
+    <link rel="stylesheet" th:href="@{/assets/css/custom.css}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
+    <div class="wrapper" sec:authorize="isAuthenticated()">
+
+        <nav th:replace="~{/admin/common/nav :: nav}"></nav>
+        <aside th:replace="~{/admin/common/left-sidebar :: side-bar}"></aside>
+        <div class="content-wrapper">
+            <section class="content" sec:authorize="hasAnyAuthority('ROLE_LOGIN_EPS')">
+                <div layout:fragment="content"></div>
+            </section>
+        </div>
+
+        <div th:replace="/admin/common/footer"></div>
+
+
+
+
+        <!-- jQuery -->
+        <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+
+        <!-- Bootstrap 4 -->
+        <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+        <!-- Select2 -->
+        <script th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
+        <!-- Bootstrap4 Duallistbox -->
+        <script th:src="@{/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js}"></script>
+        <!-- daterangepicker -->
+        <script th:src="@{/plugins/moment/moment.min.js}"></script>
+        <script th:src="@{/plugins/daterangepicker/daterangepicker.js}"></script>
+        <!-- Tempusdominus Bootstrap 4 -->
+        <script th:src="@{/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+        <!-- Summernote -->
+        <script th:src="@{/plugins/summernote/summernote-bs4.min.js}"></script>
+
+
+        <!-- InputMask -->
+        <script th:src="@{/plugins/moment/moment.min.js}"></script>
+        <script th:src="@{/plugins/inputmask/min/jquery.inputmask.bundle.min.js}"></script>
+
+
+        <!-- Bootstrap Switch -->
+        <script th:src="@{/plugins/bootstrap-switch/js/bootstrap-switch.min.js}"></script>
+
+
+        <!-- overlayScrollbars -->
+        <script th:src="@{/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+        <!-- AdminLTE App -->
+        <script th:src="@{/assets/js/adminlte.js}"></script>
+
+        <!-- DataTables -->
+        <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
+
+
+        <script th:src="@{/assets/js/facebook.js}"></script>
+        <script th:src="@{/assets/js/management.js}"></script>
+        <script th:src="@{/assets/js/user.js}"></script>
+        <script th:src="@{/assets/js/custom.js}"></script>
+
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    </div>
+</body>
+</html>

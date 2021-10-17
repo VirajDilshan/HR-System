@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2">
+        <div class="col-md-3">
+            <a th:href="@{/admin/employee/management/group/add}">
+                <div class="info-box bg-success">
+                    <span class="info-box-icon"><i class="fas fa-folder-plus"></i></span>
+
+                    <div class="info-box-content">
+                        Add New Group
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </a>
+
+            <a th:href="@{/admin/employee/management/roles/assignment}">
+                <div class="info-box bg-cyan">
+                    <span class="info-box-icon"><i class="fas fa-wrench"></i></span>
+
+                    <div class="info-box-content">
+                        Assign roles
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </a>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Summery</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3 th:text="${#lists.size(groups)}"/>
+
+                            <p>Total Groups</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Group Details</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="tbl-group" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>group name</th>
+                            <th>group description</th>
+                            <th>action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="group: ${groups}">
+                            <td th:text="${group.id}" th:classappend="${group.activate} ? '': 'del'"/>
+                            <td th:text="${group.name}" th:classappend="${group.activate} ? '': 'del'"/>
+                            <td th:text="${group.description}" th:classappend="${group.activate} ? '': 'del'"/>
+                            <td>
+                                <a href="#"><i class="fas fa-eye"></i></a>
+                                <a th:href="@{/admin/employee/management/group/edit/{id}(id=${group.id})}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a th:if="${group.activate}"
+                                   th:href="@{/admin/employee/management/group/deactivate/{id}(id=${group.id})}">
+                                    <i class="fas fa-times-circle"></i>
+                                </a>
+                                <a th:unless="${group.activate}"
+                                   th:href="@{/admin/employee/management/group/activate/{id}(id=${group.id})}">
+                                    <i class="fas fa-check-circle"></i>
+                                </a>
+                                <a th:href="@{/admin/employee/management/group/delete/{id}(id=${group.id})}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

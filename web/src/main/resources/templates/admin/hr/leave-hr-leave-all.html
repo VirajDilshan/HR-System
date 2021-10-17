@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div class="container-fluid" layout:fragment="content">
+    <div class="row pt-2 d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Leave Details</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="tbl-leave" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th th:text="#{content.leave-manage.leave-tbl.header.avatar}"></th>
+                            <th th:text="#{content.leave-manage.leave-tbl.header.firstname}"></th>
+                            <th th:text="#{content.leave-manage.leave-tbl.header.status}"></th>
+                            <th th:text="#{content.leave-manage.leave-tbl.header.from}"></th>
+                            <th th:text="#{content.leave-manage.leave-tbl.header.to}"></th>
+                            <th th:text="#{content.leave-manage.leave-tbl.header.approved-by}"></th>
+                            <th th:text="#{content.leave-manage.leave-tbl.header.action}"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="leave : ${tbl_leaves}">
+                            <td th:text="${leave.getId()}"></td>
+                            <td>
+                                <img class="direct-chat-img"
+                                     th:src="@{${leave.getEmp().getAvatarImagePath() == null ? '/assets/img/user1-128x128.jpg': leave.getEmp().getAvatarImagePath()}}" alt="avatar">
+                            </td>
+                            <td th:text="${leave.getEmp().getFirstName()}"></td>
+                            <td>
+                                <span th:text="${leave.getStatus()}" class="badge "
+                                      th:classappend="|${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).PENDING ? 'badge-success ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).APPROVED ? 'badge-warning ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).REJECTED ? 'badge-danger ': ''}
+                                          ${leave.getStatus() == T(com.epsychiatry.model.enums.LeaveStatus).CANCELED ? 'badge-secondary ': ''}|"></span>
+                            </td>
+                            <td th:text="${leave.getLeaveFrom()}"></td>
+                            <td th:text="${leave.getLeaveTo()}"></td>
+                            <th th:text="${leave.getApprovedBy() == null ? '-': leave.getApprovedBy().getFirstName()}"></th>
+                            <th>
+                                <a th:if="${leave.getStatus() ==  T(com.epsychiatry.model.enums.LeaveStatus).PENDING}" class="btn btn-info btn-xs" th:href="@{/admin/hr/management/leave/review/{id}(id=${leave.getId()})}">
+                                    <i class="fas fa-comment"></i>
+                                    </i>
+                                    review
+                                </a>
+                                <a th:href="@{/admin/hr/management/leave/view/{id}(id=${leave.getId()})}"><i class="fas fa-eye"></i></a>
+                                <a th:href="@{/admin/hr/management/leave/cancel/{id}(id=${leave.getId()})}"
+                                   th:if="${leave.getStatus() != T(com.epsychiatry.model.enums.LeaveStatus).CANCELED and
+                                leave.getAskClosed()}">
+                                    <i class="fas fa-times-circle"></i>
+                                </a>
+                            </th>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
